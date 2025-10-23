@@ -1,10 +1,10 @@
 'use client';
 
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppState } from '@/components/providers/app-state';
 
-export default function LoginPage() {
+function LoginContent() {
   const { login, isAuthenticated } = useAppState();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -89,5 +89,13 @@ export default function LoginPage() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="py-24 text-center text-sm text-slate-500">読み込み中...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
